@@ -1,33 +1,47 @@
 (function() {
   var questions = [{
-    question: "What is 2*5?",
-    choices: [2, 5, 10, 15, 20],
-    correctAnswer: 2
-  }, {
-    question: "What is 3*6?",
-    choices: [3, 6, 9, 12, 18],
-    correctAnswer: 4
-  }, {
-    question: "What is 8*9?",
-    choices: [72, 99, 108, 134, 156],
-    correctAnswer: 0
-  }, {
-    question: "What is 1*7?",
-    choices: [4, 5, 6, 7, 8],
+    question: 'In the episode "A Peice of the Action" Captain Kirk makes up a card game to distract his captors. What name did he give to the game?' ,
+    choices: ['Frizzbee', 'Freezy','Frazz','Fizzbin'],
     correctAnswer: 3
   }, {
-    question: "What is 8*8?",
-    choices: [20, 30, 40, 50, 64],
+    question: "Mr. Spock very rarely showed emotion, but in which episode did we see him cry?",
+    choices: ["Mudd's Women", 'The Naked Time', 'Balance of Terror', 'The Enemy Within', 'Arena'],
+    correctAnswer: 1
+  }, {
+    question: "Once, Chekov was wrong about his own family history. In 'Day of the DOve', Chevkov claims he has the right to avenge the death of his brother, Piotr, who was killed in a Klingon raid. Why is this inaccurate?",
+    choices: ['His siblings were sisters', 'Piotr was his pet dog', 'He was an only child', 'Romulans killed Piotr', 'Chekov is Piotr'],
+    correctAnswer: 2
+  }, {
+    question: "What is Scott's first name?",
+    choices: ['Montgomery', 'Walter', 'Clyde', 'Bruce', 'Bill'],
+    correctAnswer: 0
+  }, {
+    question: "What is the registry number for the star ship Enterprise in the original series?",
+    choices: ['Trekone','USS-North Carolina', 'CVA-60', 'NCC-Enterprise', 'NCC-1701'],
     correctAnswer: 4
   }];
-  
+  var timer = 30; //Timer of course
   var questionCounter = 0; //Tracks question number
   var selections = []; //Array containing user choices
   var quiz = $('#quiz'); //Quiz div object
-  
+  var timerId;
   // Display initial question
   displayNext();
   
+  // Display Timer
+  function time() {
+    timerId = setInterval(decrement, 1000);
+  }
+  // Decrement function
+  function decrement() {
+    timer --;
+    $('#timer').html("<h2>" + timer + "</h2>");
+    if (timer === 0){
+      alert("Time Up!")
+      clearInterval(timerId);
+      timeOut();
+    }
+  }
   // Click handler for the 'next' button
   $('#next').on('click', function (e) {
     e.preventDefault();
@@ -66,10 +80,13 @@
     if(quiz.is(':animated')) {
       return false;
     }
+    timer = 30;
     questionCounter = 0;
     selections = [];
     displayNext();
+    time();
     $('#start').hide();
+    $('#score').remove();
   });
   
   // Creates and returns the div that contains the questions and 
@@ -101,7 +118,8 @@
       input = '<input type="radio" name="answer" value=' + i + ' />';
       input += questions[index].choices[i];
       item.append(input);
-      radioList.append(item);
+      radioList.append(item)
+      radioList.append($('<br>'));
     }
     return radioList;
   }
@@ -140,10 +158,18 @@
       }
     });
   }
+  //Function run on timeout
+  function timeOut(){
+    var scoreElem = displayScore();
+        quiz.append(scoreElem).fadeIn();
+        $('#next').hide();
+        $('#prev').hide();
+        $('#start').show();
+  }
   
   // Computes score and returns a paragraph element to be displayed
   function displayScore() {
-    var score = $('<p>',{id: 'question'});
+    var score = $('<p>',{id: 'score'});
     
     var numCorrect = 0;
     for (var i = 0; i < selections.length; i++) {
@@ -156,4 +182,5 @@
                  questions.length + ' right!!!');
     return score;
   }
+  time();
 })();
