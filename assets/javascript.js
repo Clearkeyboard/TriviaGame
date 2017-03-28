@@ -8,7 +8,7 @@
     choices: ["Mudd's Women", 'The Naked Time', 'Balance of Terror', 'The Enemy Within', 'Arena'],
     correctAnswer: 1
   }, {
-    question: "Once, Chekov was wrong about his own family history. In 'Day of the DOve', Chevkov claims he has the right to avenge the death of his brother, Piotr, who was killed in a Klingon raid. Why is this inaccurate?",
+    question: "Once, Chekov was wrong about his own family history. In 'Day of the Dove', Chevkov claims he has the right to avenge the death of his brother, Piotr, who was killed in a Klingon raid. Why is this inaccurate?",
     choices: ['His siblings were sisters', 'Piotr was his pet dog', 'He was an only child', 'Romulans killed Piotr', 'Chekov is Piotr'],
     correctAnswer: 2
   }, {
@@ -20,7 +20,7 @@
     choices: ['Trekone','USS-North Carolina', 'CVA-60', 'NCC-Enterprise', 'NCC-1701'],
     correctAnswer: 4
   }];
-  var timer = 30; //Timer of course
+  var timer = 120; //Timer of course
   var questionCounter = 0; //Tracks question number
   var selections = []; //Array containing user choices
   var quiz = $('#quiz'); //Quiz div object
